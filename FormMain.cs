@@ -183,7 +183,7 @@ namespace HIDTester
 
     private void AutoCheckUsb()
     {
-        bool opened = false;
+        bool opened = true;
         if (opened)
         {
             this.KeyBoardVersion_Check();
@@ -357,6 +357,14 @@ namespace HIDTester
       Console.WriteLine(bytes);
     }
 
+    private void SendConfig(byte[] arrayBuff)
+    {
+        Console.WriteLine(PrintByteArray(arrayBuff));
+        ReportDownloadResult(true);
+        //var response = Console.ReadLine();
+        //ReportDownloadResult(response == "65");
+    }
+
     private void Download_Click(object sender, EventArgs e)
     {
       byte[] arrayBuff = new byte[65];
@@ -449,35 +457,7 @@ namespace HIDTester
           FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyGroupCharNum] = (byte) 18;
         arrayBuff[9] = FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyGroupCharNum];
 
-
-        if (true) // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download success";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载成功";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Green;
-          this.Show_Dowload_Text();
-        }
-        else
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download failed";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载失败";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Red;
-          this.Show_Dowload_Text();
-        }
+        SendConfig(arrayBuff);
       }
       else
       {
@@ -526,13 +506,8 @@ namespace HIDTester
                 arrayBuff[5] = FormMain.KeyParam.Data_Send_Buff[13];
                 break;
             }
-            if (this.WriteMode == (ushort) 0)
-            {
-              // int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
-            }
-            else if (this.WriteMode == (ushort) 1)
-              // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
-              ;
+
+            SendConfig(arrayBuff);
           }
           this.Send_WriteFlash_Cmd();
         }
@@ -540,26 +515,15 @@ namespace HIDTester
         {
           arrayBuff[2] = FormMain.KeyParam.Data_Send_Buff[5];
           arrayBuff[3] = FormMain.KeyParam.Data_Send_Buff[6];
-          if (this.WriteMode == (ushort) 0)
-          {
-            //int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
-          }
-          else if (this.WriteMode == (ushort) 1)
-            //this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
-            ;
-          this.Send_WriteFlash_Cmd();
+          SendConfig(arrayBuff);
+          Send_WriteFlash_Cmd();
         }
         else if (((int) FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyType_Num] & 15) == 8)
         {
           arrayBuff[2] = FormMain.KeyParam.Data_Send_Buff[2];
-          if (this.WriteMode == (ushort) 0)
-          {
-            //int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
-          }
-          else if (this.WriteMode == (ushort) 1)
-            //this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
-            ;
-          this.Send_WriteFlashLED_Cmd();
+          Console.WriteLine(PrintByteArray(arrayBuff));
+          SendConfig(arrayBuff);
+          Send_WriteFlashLED_Cmd();
         }
         else
         {
@@ -570,20 +534,11 @@ namespace HIDTester
           arrayBuff[4] = FormMain.KeyParam.Data_Send_Buff[7];
           arrayBuff[5] = FormMain.KeyParam.Data_Send_Buff[8];
           arrayBuff[6] = FormMain.KeyParam.Data_Send_Buff[9];
-          if (this.WriteMode == (ushort) 0)
-          {
-            //int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
-          }
-          else if (this.WriteMode == (ushort) 1)
-            //this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
-            ;
-          this.Send_WriteFlash_Cmd();
+          SendConfig(arrayBuff);
+          Send_WriteFlash_Cmd();
         }
 
       }
-
-      var bytes = PrintByteArray(arrayBuff);
-      Console.WriteLine(bytes);
     }
 
     private string PrintByteArray(byte[] bytes)
@@ -1201,7 +1156,7 @@ namespace HIDTester
       public static byte[] Data_Send_Buff = new byte[65];
       public static byte[] Protocol2_Sd_Buff = new byte[65];
       public static byte New_Mul_Mouse = 0;
-      public static byte Sd_Protocol_Type = 0;
+      public static byte Sd_Protocol_Type = 1;
       public static byte KeySet_KeyNum = 0;
       public static byte KeyType_Num = 1;
       public static byte KeyGroupCharNum = 2;
