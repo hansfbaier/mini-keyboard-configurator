@@ -1,4 +1,3 @@
-using HID;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -16,9 +15,6 @@ namespace HIDTester
   public class FormMain : Form
   {
     private ushort WriteMode = 1;
-    private Hid myHid = new Hid();
-    private IntPtr myHidPtr;
-    private HidLib myHidLib = new HidLib();
     private byte[] RecDataBuffer = new byte[90];
     private int Display_Dowlaod_Char_TM;
     private readonly Color menuBackColor = Color.FromArgb(200, 200, 169);
@@ -74,14 +70,14 @@ namespace HIDTester
     public FormMain()
     {
       this.InitializeComponent();
-      this.myHid.DataReceived += new EventHandler<report>(this.myhid_DataReceived);
-      this.myHid.DeviceRemoved += new EventHandler(this.myhid_DeviceRemoved);
       this.Lanuage_Set_EN();
       this.MenuList();
       this.KEY_Colour_Init();
       this.Time_Display_Text();
       this.Hide_Dowload_Text();
       this.LayerFunList();
+      this.Size = new Size(2000, 1000);
+      // Console.WriteLine($"==> Size: ({this.Size.Width}, {this.Size.Height})");
     }
 
     private void MenuList()
@@ -187,62 +183,23 @@ namespace HIDTester
 
     private void AutoCheckUsb()
     {
-      if (this.WriteMode == (ushort) 0)
-      {
-        if (!this.myHid.Opened)
+        bool opened = false;
+        if (opened)
         {
-          if ((int) (this.myHidPtr = this.myHid.OpenDevice((ushort) 4489, (ushort) 34960)) != -1)
-          {
             this.KeyBoardVersion_Check();
             this.stateLabel.Text = "Connected";
             this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Green;
-          }
-          else
-          {
-            this.stateLabel.Text = "Not Connected";
-            this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Red;
-          }
         }
         else
         {
-          this.stateLabel.Text = "Connected";
-          this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Green;
-        }
-      }
-      else
-      {
-        if (this.WriteMode != (ushort) 1)
-          return;
-        if (!this.myHidLib.Get_Dev_Sta())
-        {
-          if (this.myHidLib.Connect_Device())
-          {
-            this.KeyBoardVersion_Check();
-            this.stateLabel.Text = "Connected";
-            this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Green;
-          }
-          else
-          {
             this.stateLabel.Text = "Not Connected";
             this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Red;
-          }
         }
-        else if (this.myHidLib.Check_Disconnect())
-        {
-          this.stateLabel.Text = "Connected";
-          this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Green;
-        }
-        else
-        {
-          this.stateLabel.Text = "Not Connected";
-          this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Red;
-        }
-      }
     }
 
-    protected void myhid_DataReceived(object sender, report e)
+    protected void myhid_DataReceived(object sender)
     {
-      this.RecDataBuffer = e.reportBuff;
+      //this.RecDataBuffer = e.reportBuff;
       new ASCIIEncoding().GetString(this.RecDataBuffer);
     }
 
@@ -291,6 +248,7 @@ namespace HIDTester
 
     private void KeyBoardVersion_Check()
     {
+      /*
       byte[] arrayBuff = new byte[65];
       FormMain.KeyParam.ReportID = (byte) 0;
       arrayBuff[0] = (byte) 0;
@@ -335,6 +293,7 @@ namespace HIDTester
           }
         }
       }
+      */
     }
 
     private void Send_WriteFlash_Cmd()
@@ -344,7 +303,7 @@ namespace HIDTester
       arrayBuff[1] = (byte) 170;
       if (this.WriteMode == (ushort) 0)
       {
-        if ((byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff)) == (byte) 0)
+        if (true) // (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff)) == (byte) 0)
         {
           switch (FormMain.KeyParam.Language_Set)
           {
@@ -377,7 +336,7 @@ namespace HIDTester
       {
         if (this.WriteMode != (ushort) 1)
           return;
-        if (this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
+        if (true) // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
         {
           switch (FormMain.KeyParam.Language_Set)
           {
@@ -415,7 +374,7 @@ namespace HIDTester
       arrayBuff[1] = (byte) 161;
       if (this.WriteMode == (ushort) 0)
       {
-        if ((byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff)) == (byte) 0)
+        if (true) // (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff)) == (byte) 0)
         {
           switch (FormMain.KeyParam.Language_Set)
           {
@@ -448,7 +407,7 @@ namespace HIDTester
       {
         if (this.WriteMode != (ushort) 1)
           return;
-        if (this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
+        if (true) // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
         {
           switch (FormMain.KeyParam.Language_Set)
           {
@@ -488,13 +447,13 @@ namespace HIDTester
         arrayBuff[1] = (byte) 1;
       if (this.WriteMode == (ushort) 0)
       {
-        int num = (int) (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
+        //int num = (int) (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
       }
       else
       {
         if (this.WriteMode != (ushort) 1)
           return;
-        this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+        // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
       }
     }
 
@@ -502,8 +461,7 @@ namespace HIDTester
     {
       byte[] arrayBuff = new byte[65];
       Array.Clear((Array) arrayBuff, 0, arrayBuff.Length);
-      if (!this.myHidLib.Get_Dev_Sta())
-        return;
+      // if (!this.myHidLib.Get_Dev_Sta()) return;
       arrayBuff[0] = FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum];
       if (arrayBuff[0] == (byte) 0)
         return;
@@ -590,7 +548,9 @@ namespace HIDTester
         if (arrayBuff[44] != (byte) 0 || arrayBuff[45] != (byte) 0)
           FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyGroupCharNum] = (byte) 18;
         arrayBuff[9] = FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyGroupCharNum];
-        if (this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
+
+
+        if (true) // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
         {
           switch (FormMain.KeyParam.Language_Set)
           {
@@ -667,10 +627,11 @@ namespace HIDTester
             }
             if (this.WriteMode == (ushort) 0)
             {
-              int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
+              // int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
             }
             else if (this.WriteMode == (ushort) 1)
-              this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+              // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+              ;
           }
           this.Send_WriteFlash_Cmd();
         }
@@ -680,10 +641,11 @@ namespace HIDTester
           arrayBuff[3] = FormMain.KeyParam.Data_Send_Buff[6];
           if (this.WriteMode == (ushort) 0)
           {
-            int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
+            //int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
           }
           else if (this.WriteMode == (ushort) 1)
-            this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+            //this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+            ;
           this.Send_WriteFlash_Cmd();
         }
         else if (((int) FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyType_Num] & 15) == 8)
@@ -691,10 +653,11 @@ namespace HIDTester
           arrayBuff[2] = FormMain.KeyParam.Data_Send_Buff[2];
           if (this.WriteMode == (ushort) 0)
           {
-            int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
+            //int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
           }
           else if (this.WriteMode == (ushort) 1)
-            this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+            //this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+            ;
           this.Send_WriteFlashLED_Cmd();
         }
         else
@@ -708,13 +671,26 @@ namespace HIDTester
           arrayBuff[6] = FormMain.KeyParam.Data_Send_Buff[9];
           if (this.WriteMode == (ushort) 0)
           {
-            int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
+            //int num = (int) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
           }
           else if (this.WriteMode == (ushort) 1)
-            this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+            //this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
+            ;
           this.Send_WriteFlash_Cmd();
         }
       }
+      Console.WriteLine(PrintByteArray(FormMain.KeyParam.Data_Send_Buff));
+    }
+
+    private string PrintByteArray(byte[] bytes)
+    {
+        var sb = new StringBuilder("[");
+        foreach (var b in bytes)
+        {
+            sb.Append($"{b:x2}" + ", ");
+        }
+        sb.Append("]");
+        return sb.ToString();
     }
 
     private void Key_Clear_Click(object sender, EventArgs e) => this.Key_Clear_Fun();
@@ -1309,7 +1285,6 @@ namespace HIDTester
       this.Cursor = Cursors.Default;
       this.FormBorderStyle = FormBorderStyle.Fixed3D;
       this.Name = nameof (FormMain);
-      this.Load += new EventHandler(this.FormMain_Load);
       this.splitContainer1.EndInit();
       this.splitContainer1.ResumeLayout(false);
       ((ISupportInitialize) this.pictureBox1).EndInit();
