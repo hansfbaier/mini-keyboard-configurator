@@ -301,69 +301,39 @@ namespace HIDTester
       byte[] arrayBuff = new byte[65];
       arrayBuff[0] = (byte) 170;
       arrayBuff[1] = (byte) 170;
-      if (this.WriteMode == (ushort) 0)
+      var bytes = PrintByteArray(arrayBuff);
+      Console.WriteLine(bytes);
+    }
+
+    private void ReportDownloadResult(bool result)
+    {
+      if (result)
       {
-        if (true) // (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff)) == (byte) 0)
+        switch (FormMain.KeyParam.Language_Set)
         {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download success";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载成功";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Green;
-          this.Show_Dowload_Text();
+          case 0:
+            this.label_Dowload_Dsp.Text = "Download success";
+            break;
+          case 1:
+            this.label_Dowload_Dsp.Text = "下载成功";
+            break;
         }
-        else
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download failed";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载失败";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Red;
-          this.Show_Dowload_Text();
-        }
+        this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Green;
+        this.Show_Dowload_Text();
       }
       else
       {
-        if (this.WriteMode != (ushort) 1)
-          return;
-        if (true) // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
+        switch (FormMain.KeyParam.Language_Set)
         {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download success";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载成功";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Green;
-          this.Show_Dowload_Text();
+          case 0:
+            this.label_Dowload_Dsp.Text = "Download failed";
+            break;
+          case 1:
+            this.label_Dowload_Dsp.Text = "下载失败";
+            break;
         }
-        else
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download failed";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载失败";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Red;
-          this.Show_Dowload_Text();
-        }
+        this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Red;
+        this.Show_Dowload_Text();
       }
     }
 
@@ -372,70 +342,8 @@ namespace HIDTester
       byte[] arrayBuff = new byte[65];
       arrayBuff[0] = (byte) 170;
       arrayBuff[1] = (byte) 161;
-      if (this.WriteMode == (ushort) 0)
-      {
-        if (true) // (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff)) == (byte) 0)
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download success";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载成功";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Green;
-          this.Show_Dowload_Text();
-        }
-        else
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download failed";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载失败";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Red;
-          this.Show_Dowload_Text();
-        }
-      }
-      else
-      {
-        if (this.WriteMode != (ushort) 1)
-          return;
-        if (true) // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff))
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download success";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载成功";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Green;
-          this.Show_Dowload_Text();
-        }
-        else
-        {
-          switch (FormMain.KeyParam.Language_Set)
-          {
-            case 0:
-              this.label_Dowload_Dsp.Text = "Download failed";
-              break;
-            case 1:
-              this.label_Dowload_Dsp.Text = "下载失败";
-              break;
-          }
-          this.label_Dowload_Dsp.BackColor = this.label_Dowload_Dsp.BackColor = Color.Red;
-          this.Show_Dowload_Text();
-        }
-      }
+      var bytes = PrintByteArray(arrayBuff);
+      Console.WriteLine(bytes);
     }
 
     private void Send_SwLayer()
@@ -445,16 +353,8 @@ namespace HIDTester
       arrayBuff[1] = FormMain.KeyParam.KEY_Cur_Layer;
       if (arrayBuff[1] == (byte) 0)
         arrayBuff[1] = (byte) 1;
-      if (this.WriteMode == (ushort) 0)
-      {
-        //int num = (int) (byte) this.myHid.Write(new report(FormMain.KeyParam.ReportID, arrayBuff));
-      }
-      else
-      {
-        if (this.WriteMode != (ushort) 1)
-          return;
-        // this.myHidLib.WriteDevice(FormMain.KeyParam.ReportID, arrayBuff);
-      }
+      var bytes = PrintByteArray(arrayBuff);
+      Console.WriteLine(bytes);
     }
 
     private void Download_Click(object sender, EventArgs e)
@@ -463,8 +363,8 @@ namespace HIDTester
       Array.Clear((Array) arrayBuff, 0, arrayBuff.Length);
       // if (!this.myHidLib.Get_Dev_Sta()) return;
       arrayBuff[0] = FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum];
-      if (arrayBuff[0] == (byte) 0)
-        return;
+      if (arrayBuff[0] == (byte) 0) return;
+
       if (FormMain.KeyParam.Sd_Protocol_Type == (byte) 1)
       {
         arrayBuff[0] = (byte) 254;
@@ -592,6 +492,7 @@ namespace HIDTester
           arrayBuff[1] <<= 4;
           arrayBuff[1] |= FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyType_Num];
         }
+
         if (((int) FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyType_Num] & 15) == 1 || ((int) FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyType_Num] & 15) == 0)
         {
           arrayBuff[2] = FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeyGroupCharNum];
@@ -678,8 +579,11 @@ namespace HIDTester
             ;
           this.Send_WriteFlash_Cmd();
         }
+
       }
-      Console.WriteLine(PrintByteArray(FormMain.KeyParam.Data_Send_Buff));
+
+      var bytes = PrintByteArray(arrayBuff);
+      Console.WriteLine(bytes);
     }
 
     private string PrintByteArray(byte[] bytes)
@@ -687,7 +591,7 @@ namespace HIDTester
         var sb = new StringBuilder("[");
         foreach (var b in bytes)
         {
-            sb.Append($"{b:x2}" + ", ");
+            sb.Append($"0x{b:x2}" + ", ");
         }
         sb.Append("]");
         return sb.ToString();
