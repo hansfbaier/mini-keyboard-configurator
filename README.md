@@ -20,4 +20,10 @@ output to the device.
 $ make run
 ```
 
+## Limitations
+* device presence/connection detection does not work, it always shows 'Connected'
+* device type detection does not work; it may work for the other keyboard types as the
+  one displayed above, but don't take my word for it
+* some characters on the Buttons are not rendered correctly
+
 Contributions welcome!
