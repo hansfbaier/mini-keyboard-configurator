@@ -13,6 +13,9 @@ all: $(EXE)
 $(EXE): $(RESOURCES) $(SRCS)
 	@mcs $(DEBUG) $(SRCS) -reference:System.Windows.Forms,System.Drawing $(RES_ARGS) -out:$@
 
+run: $(EXE)
+	./$(EXE) | ./usb-comm.py
+
 clean:
 	rm *.resources *.exe *.mdb -v -f
 
