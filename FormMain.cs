@@ -197,18 +197,6 @@ namespace HIDTester
         }
     }
 
-    protected void myhid_DataReceived(object sender)
-    {
-      //this.RecDataBuffer = e.reportBuff;
-      new ASCIIEncoding().GetString(this.RecDataBuffer);
-    }
-
-    protected void myhid_DeviceRemoved(object sender, EventArgs e)
-    {
-      this.stateLabel.Text = "设备移除";
-      this.stateLabel.BackColor = this.stateLabel.BackColor = Color.Red;
-    }
-
     private void aboutMenu_Click(object sender, EventArgs e) => Process.Start("http://www.cnblogs.com/hebaichuanyeah/p/4504855.html");
 
     private void Time_Display_Text()
@@ -360,9 +348,8 @@ namespace HIDTester
     private void SendConfig(byte[] arrayBuff)
     {
         Console.WriteLine(PrintByteArray(arrayBuff));
-        ReportDownloadResult(true);
         //var response = Console.ReadLine();
-        //ReportDownloadResult(response == "65");
+        ReportDownloadResult(true); // response == "65");
     }
 
     private void Download_Click(object sender, EventArgs e)
