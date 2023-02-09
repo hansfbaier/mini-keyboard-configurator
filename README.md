@@ -13,4 +13,9 @@ Due to the lack of libusb support in Mono,
 I have used a python script to send the configuration
 output to the device.
 
+## Build and run:
+```
+$ make run
+```
+
 Contributions welcome!
