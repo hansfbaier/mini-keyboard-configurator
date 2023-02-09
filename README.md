@@ -3,6 +3,7 @@ This is a basic port of the original Windows
 Configurator application for Linux, for this macro keyboard:
 
 ![image](images/minikeyboard.png)
+![image](images/screenshot.png)
 
 ## Requirements:
 * mono installed (including WinForms)
