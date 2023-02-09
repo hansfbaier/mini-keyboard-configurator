@@ -5,6 +5,8 @@ Configurator application for Linux, for this macro keyboard:
 ![image](images/minikeyboard.png)
 ![image](images/screenshot.png)
 
+You can purchase the keyboard [here](https://www.aliexpress.com/item/1005005066128972.html).
+
 ## Requirements:
 * mono installed (including WinForms)
 * python3 and pyusb installed
