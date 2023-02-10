@@ -844,7 +844,7 @@ namespace HIDTester
     {
       if (FormMain.KeyParam.KEY_Cur_Page == (byte) 4)
         return;
-      FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum] = FormMain.KeyParam.New_Mul_Mouse != (byte) 1 ? (byte) 19 : (byte) 22;
+      FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum] = 0x16;
       this.Set_Key_Init();
       this.Clear_Key_Char();
       this.KEY_Colour_Init();
@@ -855,7 +855,7 @@ namespace HIDTester
     {
       if (FormMain.KeyParam.KEY_Cur_Page == (byte) 4)
         return;
-      FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum] = FormMain.KeyParam.New_Mul_Mouse != (byte) 1 ? (byte) 20 : (byte) 23;
+      FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum] = 0x17;
       this.Set_Key_Init();
       this.Clear_Key_Char();
       this.KEY_Colour_Init();
@@ -866,7 +866,7 @@ namespace HIDTester
     {
       if (FormMain.KeyParam.KEY_Cur_Page == (byte) 4)
         return;
-      FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum] = FormMain.KeyParam.New_Mul_Mouse != (byte) 1 ? (byte) 21 : (byte) 24;
+      FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum] = 0x18;
       this.Set_Key_Init();
       this.Clear_Key_Char();
       this.KEY_Colour_Init();
