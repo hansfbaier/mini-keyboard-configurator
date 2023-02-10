@@ -26,4 +26,11 @@ $ make run
   one displayed above, but don't take my word for it
 * some characters on the Buttons are not rendered correctly
 
+## Status / Outlook
+It is basically functioning that I can download configuration
+to the macro keyboard and it works for my purposes.
+Nevertheless the code still would still need a lot of work for
+a production ready application, but my priorities won't allow for this.
+I hope it will be useful to someone, who might put more work into it.
+
 Contributions welcome!
