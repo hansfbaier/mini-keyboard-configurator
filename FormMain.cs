@@ -356,7 +356,6 @@ namespace HIDTester
     {
       byte[] arrayBuff = new byte[65];
       Array.Clear((Array) arrayBuff, 0, arrayBuff.Length);
-      // if (!this.myHidLib.Get_Dev_Sta()) return;
       arrayBuff[0] = FormMain.KeyParam.Data_Send_Buff[(int) FormMain.KeyParam.KeySet_KeyNum];
       if (arrayBuff[0] == (byte) 0) return;
 
