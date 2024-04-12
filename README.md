@@ -7,6 +7,9 @@ Configurator application for Linux, for this macro keyboard:
 
 You can purchase the keyboard [here](https://www.aliexpress.com/item/1005005066128972.html).
 
+NOTE: You can find a command line alternative to this tool here:
+https://github.com/kriomant/ch57x-keyboard-tool
+
 ## Requirements:
 * mono installed (including WinForms)
 * python3 and pyusb installed
